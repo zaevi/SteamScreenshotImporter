@@ -9,6 +9,7 @@ using Gameloop.Vdf;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Data;
+using System.Xml;
 
 namespace SteamScreenshotImporter
 {
@@ -102,14 +103,22 @@ namespace SteamScreenshotImporter
 
         public static bool Save(string path)
         {
-            Data.WriteXml(path);
+            using (var writer = XmlWriter.Create(path, new XmlWriterSettings { ConformanceLevel = ConformanceLevel.Auto, Indent = true}))
+            {
+                writer.WriteElementString("SteamPath", Steam.RootPath);
+                Data.WriteXml(writer);
+            }
             return true;
         }
 
         public static bool Load(string path)
         {
             if (!File.Exists(path)) return false;
-            Data.ReadXml(path);
+            using (var reader = XmlReader.Create(path, new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Auto }))
+            {
+                Steam.RootPath = reader.ReadElementContentAsString();
+                Data.ReadXml(reader);
+            }
             return true;
         }
     }

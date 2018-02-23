@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Microsoft.Win32;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace SteamScreenshotImporter
 {
@@ -20,6 +22,8 @@ namespace SteamScreenshotImporter
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SteamScreenImporter\";
 
         public static BindingList<string> ImageList = new BindingList<string>();
+
+        dynamic Settings = new { SteamPath = string.Empty};
 
         public Main()
         {
@@ -42,6 +46,10 @@ namespace SteamScreenshotImporter
         {
             if (!SteamData.Load(AppDataPath + "data.xml"))
                 btnScan_LinkClicked(null, null);
+            else
+            {
+                LoadSettings();
+            }
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -75,6 +83,7 @@ namespace SteamScreenshotImporter
         private void btnScan_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             dataSet.Clear();
+            File.Delete(AppDataPath + "settings.xml");
             Steam.RootPath = FindSteamPath();
             Steam.Scan();
             SteamData.Save(AppDataPath + "data.xml");
@@ -124,7 +133,34 @@ namespace SteamScreenshotImporter
             var screenshotDir = string.Format(@"{0}userdata\{1}\760\remote\{2}\screenshots\", Steam.RootPath, userId, appId);
 
             Steam.ImportImages(ImageList, screenshotDir);
-            
+
+            Output("导入成功");
+            ImageList.Clear();
+            SaveSettings();
+        }
+
+        private void LoadSettings()
+        {
+            var xmlPath = AppDataPath + "settings.xml";
+            if (!File.Exists(xmlPath)) return;
+
+            var xml = XElement.Load(xmlPath);
+            userBox.SelectedValue = xml.Element("LastUser").Value;
+            gameBox.SelectedValue = xml.Element("LastGame").Value;
+            addImageDialog.InitialDirectory = xml.Element("LastFileDialogPath").Value;
+            addFolderDialog.SelectedPath = xml.Element("LastFolderDialogPath").Value;
+
+        }
+
+        private void SaveSettings()
+        {
+            var xmlPath = AppDataPath + "settings.xml";
+            new XElement("Settings",
+                new XElement("LastUser", userBox.SelectedValue),
+                new XElement("LastGame", gameBox.SelectedValue),
+                new XElement("LastFileDialogPath", addImageDialog.InitialDirectory),
+                new XElement("LastFolderDialogPath", addFolderDialog.SelectedPath))
+                .Save(xmlPath);
         }
     }
 }
