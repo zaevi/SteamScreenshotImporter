@@ -70,17 +70,16 @@ namespace SteamScreenshotImporter
 
         public static bool Save(string path)
         {
-            return false;
+            Data.WriteXml(path);
+            return true;
         }
 
         public static bool Load(string path)
         {
-            return false;
-        }
+            if (!File.Exists(path)) return false;
+            Data.ReadXml(path);
+            return true;
 
-        public static void New()
-        {
-            Steam.Settings = new Dictionary<string, string>();
         }
     }
 }

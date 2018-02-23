@@ -31,6 +31,17 @@
             this.steamPathDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.userBox = new System.Windows.Forms.ComboBox();
+            this.dataSet = new System.Data.DataSet();
+            this.dataTable1 = new System.Data.DataTable();
+            this.dataColumn1 = new System.Data.DataColumn();
+            this.dataColumn2 = new System.Data.DataColumn();
+            this.dataTable2 = new System.Data.DataTable();
+            this.dataColumn3 = new System.Data.DataColumn();
+            this.dataColumn4 = new System.Data.DataColumn();
+            this.dataTable3 = new System.Data.DataTable();
+            this.dataColumn5 = new System.Data.DataColumn();
+            this.dataColumn6 = new System.Data.DataColumn();
+            this.dataColumn7 = new System.Data.DataColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnScan = new System.Windows.Forms.LinkLabel();
             this.gameBox = new System.Windows.Forms.ComboBox();
@@ -45,25 +56,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.outputBox = new System.Windows.Forms.TextBox();
-            this.dataSet = new System.Data.DataSet();
-            this.games = new System.Data.DataTable();
-            this.dataColumn1 = new System.Data.DataColumn();
-            this.dataColumn2 = new System.Data.DataColumn();
-            this.dataTable1 = new System.Data.DataTable();
-            this.dataColumn3 = new System.Data.DataColumn();
-            this.dataColumn4 = new System.Data.DataColumn();
-            this.dataTable2 = new System.Data.DataTable();
-            this.dataColumn5 = new System.Data.DataColumn();
-            this.dataColumn6 = new System.Data.DataColumn();
-            this.dataColumn7 = new System.Data.DataColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable3)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.games)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
             this.SuspendLayout();
             // 
             // steamPathDialog
@@ -91,6 +91,101 @@
             this.userBox.Size = new System.Drawing.Size(187, 23);
             this.userBox.TabIndex = 1;
             this.userBox.ValueMember = "Users.id";
+            // 
+            // dataSet
+            // 
+            this.dataSet.DataSetName = "SteamData";
+            this.dataSet.Relations.AddRange(new System.Data.DataRelation[] {
+            new System.Data.DataRelation("id", "Users", "UserGame", new string[] {
+                        "id"}, new string[] {
+                        "id"}, false),
+            new System.Data.DataRelation("appid", "Games", "UserGame", new string[] {
+                        "appid"}, new string[] {
+                        "appid"}, false)});
+            this.dataSet.Tables.AddRange(new System.Data.DataTable[] {
+            this.dataTable1,
+            this.dataTable2,
+            this.dataTable3});
+            // 
+            // dataTable1
+            // 
+            this.dataTable1.Columns.AddRange(new System.Data.DataColumn[] {
+            this.dataColumn1,
+            this.dataColumn2});
+            this.dataTable1.Constraints.AddRange(new System.Data.Constraint[] {
+            new System.Data.UniqueConstraint("Constraint1", new string[] {
+                        "appid"}, false)});
+            this.dataTable1.TableName = "Games";
+            // 
+            // dataColumn1
+            // 
+            this.dataColumn1.AllowDBNull = false;
+            this.dataColumn1.ColumnName = "appid";
+            this.dataColumn1.DataType = typeof(int);
+            // 
+            // dataColumn2
+            // 
+            this.dataColumn2.ColumnName = "name";
+            // 
+            // dataTable2
+            // 
+            this.dataTable2.Columns.AddRange(new System.Data.DataColumn[] {
+            this.dataColumn3,
+            this.dataColumn4});
+            this.dataTable2.Constraints.AddRange(new System.Data.Constraint[] {
+            new System.Data.UniqueConstraint("Constraint1", new string[] {
+                        "id"}, true)});
+            this.dataTable2.PrimaryKey = new System.Data.DataColumn[] {
+        this.dataColumn3};
+            this.dataTable2.TableName = "Users";
+            // 
+            // dataColumn3
+            // 
+            this.dataColumn3.AllowDBNull = false;
+            this.dataColumn3.ColumnName = "id";
+            this.dataColumn3.DataType = typeof(int);
+            // 
+            // dataColumn4
+            // 
+            this.dataColumn4.ColumnName = "name";
+            // 
+            // dataTable3
+            // 
+            this.dataTable3.Columns.AddRange(new System.Data.DataColumn[] {
+            this.dataColumn5,
+            this.dataColumn6,
+            this.dataColumn7});
+            this.dataTable3.Constraints.AddRange(new System.Data.Constraint[] {
+            new System.Data.UniqueConstraint("Constraint1", new string[] {
+                        "appid",
+                        "id"}, true),
+            new System.Data.ForeignKeyConstraint("appid", "Games", new string[] {
+                        "appid"}, new string[] {
+                        "appid"}, System.Data.AcceptRejectRule.None, System.Data.Rule.Cascade, System.Data.Rule.Cascade),
+            new System.Data.ForeignKeyConstraint("id", "Users", new string[] {
+                        "id"}, new string[] {
+                        "id"}, System.Data.AcceptRejectRule.None, System.Data.Rule.Cascade, System.Data.Rule.Cascade)});
+            this.dataTable3.PrimaryKey = new System.Data.DataColumn[] {
+        this.dataColumn6,
+        this.dataColumn5};
+            this.dataTable3.TableName = "UserGame";
+            // 
+            // dataColumn5
+            // 
+            this.dataColumn5.AllowDBNull = false;
+            this.dataColumn5.ColumnName = "id";
+            this.dataColumn5.DataType = typeof(int);
+            // 
+            // dataColumn6
+            // 
+            this.dataColumn6.AllowDBNull = false;
+            this.dataColumn6.ColumnName = "appid";
+            this.dataColumn6.DataType = typeof(int);
+            // 
+            // dataColumn7
+            // 
+            this.dataColumn7.ColumnName = "name";
+            this.dataColumn7.ReadOnly = true;
             // 
             // panel1
             // 
@@ -243,101 +338,6 @@
             this.outputBox.Size = new System.Drawing.Size(341, 56);
             this.outputBox.TabIndex = 5;
             // 
-            // dataSet
-            // 
-            this.dataSet.DataSetName = "NewDataSet";
-            this.dataSet.Relations.AddRange(new System.Data.DataRelation[] {
-            new System.Data.DataRelation("id", "Users", "UserGame", new string[] {
-                        "id"}, new string[] {
-                        "id"}, false),
-            new System.Data.DataRelation("appid", "Games", "UserGame", new string[] {
-                        "appid"}, new string[] {
-                        "appid"}, false)});
-            this.dataSet.Tables.AddRange(new System.Data.DataTable[] {
-            this.games,
-            this.dataTable1,
-            this.dataTable2});
-            // 
-            // games
-            // 
-            this.games.Columns.AddRange(new System.Data.DataColumn[] {
-            this.dataColumn1,
-            this.dataColumn2});
-            this.games.Constraints.AddRange(new System.Data.Constraint[] {
-            new System.Data.UniqueConstraint("Constraint1", new string[] {
-                        "appid"}, false)});
-            this.games.TableName = "Games";
-            // 
-            // dataColumn1
-            // 
-            this.dataColumn1.AllowDBNull = false;
-            this.dataColumn1.ColumnName = "appid";
-            this.dataColumn1.DataType = typeof(int);
-            // 
-            // dataColumn2
-            // 
-            this.dataColumn2.ColumnName = "name";
-            // 
-            // dataTable1
-            // 
-            this.dataTable1.Columns.AddRange(new System.Data.DataColumn[] {
-            this.dataColumn3,
-            this.dataColumn4});
-            this.dataTable1.Constraints.AddRange(new System.Data.Constraint[] {
-            new System.Data.UniqueConstraint("Constraint1", new string[] {
-                        "id"}, true)});
-            this.dataTable1.PrimaryKey = new System.Data.DataColumn[] {
-        this.dataColumn3};
-            this.dataTable1.TableName = "Users";
-            // 
-            // dataColumn3
-            // 
-            this.dataColumn3.AllowDBNull = false;
-            this.dataColumn3.ColumnName = "id";
-            this.dataColumn3.DataType = typeof(int);
-            // 
-            // dataColumn4
-            // 
-            this.dataColumn4.ColumnName = "name";
-            // 
-            // dataTable2
-            // 
-            this.dataTable2.Columns.AddRange(new System.Data.DataColumn[] {
-            this.dataColumn5,
-            this.dataColumn6,
-            this.dataColumn7});
-            this.dataTable2.Constraints.AddRange(new System.Data.Constraint[] {
-            new System.Data.ForeignKeyConstraint("appid", "Games", new string[] {
-                        "appid"}, new string[] {
-                        "appid"}, System.Data.AcceptRejectRule.None, System.Data.Rule.Cascade, System.Data.Rule.Cascade),
-            new System.Data.ForeignKeyConstraint("id", "Users", new string[] {
-                        "id"}, new string[] {
-                        "id"}, System.Data.AcceptRejectRule.None, System.Data.Rule.Cascade, System.Data.Rule.Cascade),
-            new System.Data.UniqueConstraint("pkey", new string[] {
-                        "appid",
-                        "id"}, true)});
-            this.dataTable2.PrimaryKey = new System.Data.DataColumn[] {
-        this.dataColumn6,
-        this.dataColumn5};
-            this.dataTable2.TableName = "UserGame";
-            // 
-            // dataColumn5
-            // 
-            this.dataColumn5.AllowDBNull = false;
-            this.dataColumn5.ColumnName = "id";
-            this.dataColumn5.DataType = typeof(int);
-            // 
-            // dataColumn6
-            // 
-            this.dataColumn6.AllowDBNull = false;
-            this.dataColumn6.ColumnName = "appid";
-            this.dataColumn6.DataType = typeof(int);
-            // 
-            // dataColumn7
-            // 
-            this.dataColumn7.ColumnName = "name";
-            this.dataColumn7.ReadOnly = true;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -350,6 +350,11 @@
             this.Name = "Main";
             this.Text = "Steam Screenshot Importer";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.Shown += new System.EventHandler(this.Main_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable3)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -357,10 +362,6 @@
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.games)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -385,13 +386,13 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox outputBox;
         private System.Data.DataSet dataSet;
-        private System.Data.DataTable games;
+        private System.Data.DataTable dataTable1;
         private System.Data.DataColumn dataColumn1;
         private System.Data.DataColumn dataColumn2;
-        private System.Data.DataTable dataTable1;
+        private System.Data.DataTable dataTable2;
         private System.Data.DataColumn dataColumn3;
         private System.Data.DataColumn dataColumn4;
-        private System.Data.DataTable dataTable2;
+        private System.Data.DataTable dataTable3;
         private System.Data.DataColumn dataColumn5;
         private System.Data.DataColumn dataColumn6;
         private System.Data.DataColumn dataColumn7;

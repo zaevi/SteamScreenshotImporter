@@ -16,6 +16,8 @@ namespace SteamScreenshotImporter
     {
         public static Action<string> Output;
 
+        public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SteamScreenImporter\";
+
         public Main()
         {
             InitializeComponent();
@@ -27,12 +29,20 @@ namespace SteamScreenshotImporter
 
             Output = msg => outputBox.AppendText(Environment.NewLine + msg);
             SteamData.Data = dataSet;
+
+            Directory.CreateDirectory(AppDataPath);
+        }
+
+
+        private void Main_Shown(object sender, EventArgs e)
+        {
+            if (!SteamData.Load(AppDataPath + "data.xml"))
+                btnScan_LinkClicked(null, null);
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            // Output(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-            // Output(Path.GetTempPath());
+
         }
 
         string FindSteamPath(string path=null)
@@ -62,6 +72,7 @@ namespace SteamScreenshotImporter
         {
             Steam.RootPath = FindSteamPath();
             Steam.Scan();
+            SteamData.Save(AppDataPath + "data.xml");
         }
     }
 }
