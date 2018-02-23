@@ -314,7 +314,7 @@
             // 
             this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImport.Location = new System.Drawing.Point(367, 9);
+            this.btnImport.Location = new System.Drawing.Point(367, 18);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(104, 44);
             this.btnImport.TabIndex = 4;
@@ -330,7 +330,7 @@
             this.panel4.Location = new System.Drawing.Point(0, 267);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.panel4.Size = new System.Drawing.Size(483, 66);
+            this.panel4.Size = new System.Drawing.Size(483, 75);
             this.panel4.TabIndex = 4;
             // 
             // outputBox
@@ -340,7 +340,7 @@
             this.outputBox.Multiline = true;
             this.outputBox.Name = "outputBox";
             this.outputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputBox.Size = new System.Drawing.Size(341, 56);
+            this.outputBox.Size = new System.Drawing.Size(341, 65);
             this.outputBox.TabIndex = 5;
             // 
             // addImageDialog
@@ -361,13 +361,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(483, 333);
+            this.ClientSize = new System.Drawing.Size(483, 342);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Main";
             this.Text = "Steam Screenshot Importer";
-            this.Load += new System.EventHandler(this.Main_Load);
             this.Shown += new System.EventHandler(this.Main_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Main_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Main_DragEnter);

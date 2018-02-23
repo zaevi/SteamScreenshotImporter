@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using Microsoft.Win32;
+using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
-using Microsoft.Win32;
-using System.Xml;
+using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace SteamScreenshotImporter
@@ -47,14 +40,7 @@ namespace SteamScreenshotImporter
             if (!SteamData.Load(AppDataPath + "data.xml"))
                 btnScan_LinkClicked(null, null);
             else
-            {
                 LoadSettings();
-            }
-        }
-
-        private void Main_Load(object sender, EventArgs e)
-        {
-
         }
 
         string FindSteamPath(string path = null)

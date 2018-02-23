@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Gameloop.Vdf;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.IO;
-using Gameloop.Vdf;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Data;
+using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace SteamScreenshotImporter
@@ -103,10 +100,10 @@ namespace SteamScreenshotImporter
 
         public static bool Save(string path)
         {
-            using (var writer = XmlWriter.Create(path, new XmlWriterSettings { ConformanceLevel = ConformanceLevel.Auto, Indent = true}))
+            using (var writer = XmlWriter.Create(path, new XmlWriterSettings { ConformanceLevel = ConformanceLevel.Auto, Indent = true }))
             {
-                writer.WriteElementString("SteamPath", Steam.RootPath);
                 Data.WriteXml(writer);
+                writer.WriteElementString("SteamPath", Steam.RootPath);
             }
             return true;
         }
@@ -114,10 +111,10 @@ namespace SteamScreenshotImporter
         public static bool Load(string path)
         {
             if (!File.Exists(path)) return false;
-            using (var reader = XmlReader.Create(path, new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Auto }))
+            using (var reader = XmlReader.Create(path, new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Auto, IgnoreWhitespace = true }))
             {
-                Steam.RootPath = reader.ReadElementContentAsString();
                 Data.ReadXml(reader);
+                Steam.RootPath = reader.ReadElementContentAsString();
             }
             return true;
         }
