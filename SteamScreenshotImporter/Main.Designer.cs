@@ -53,7 +53,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnAddImage = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.outputBox = new System.Windows.Forms.TextBox();
             this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
@@ -310,21 +310,22 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "拖动图像至此处或";
             // 
-            // button1
+            // btnImport
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(367, 9);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 44);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "导入";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImport.Location = new System.Drawing.Point(367, 9);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(104, 44);
+            this.btnImport.TabIndex = 4;
+            this.btnImport.Text = "导入";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // panel4
             // 
             this.panel4.Controls.Add(this.outputBox);
-            this.panel4.Controls.Add(this.button1);
+            this.panel4.Controls.Add(this.btnImport);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 267);
             this.panel4.Name = "panel4";
@@ -401,7 +402,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel btnAddImage;
         private System.Windows.Forms.ListBox listBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox outputBox;
         private System.Data.DataSet dataSet;

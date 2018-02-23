@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.IO;
 using Gameloop.Vdf;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Data;
 
 namespace SteamScreenshotImporter
@@ -59,6 +61,36 @@ namespace SteamScreenshotImporter
 
             return true;
         }
+
+        public static bool ImportImages(IEnumerable<string> imageList, string screenshotDir)
+        {
+            Directory.CreateDirectory(screenshotDir);
+
+            var time = DateTime.Now.ToString("yyyyMMddHHmmss_");
+            int n = 1;
+
+            foreach(var imagePath in imageList)
+            {
+                var name = time + (n++) + ".jpg";
+                using (var image = Image.FromFile(imagePath))
+                {
+                    image.Save(screenshotDir + name, ImageFormat.Jpeg);
+                    using (var thumbnail = GetThumbnail(image))
+                        thumbnail.Save(screenshotDir + @"thumbnails\" + name, ImageFormat.Jpeg);
+                }
+
+                Main.Output(Path.GetFileName(imagePath) + " => " + name);
+            }
+
+            return true;
+        }
+
+        private static Image GetThumbnail(Image origin)
+        {
+            var width = origin.Width * 200 / origin.Height;
+            Image img = new Bitmap(origin, new Size(width, 200));
+            return img;
+        }
     }
 
     class SteamData
@@ -79,7 +111,6 @@ namespace SteamScreenshotImporter
             if (!File.Exists(path)) return false;
             Data.ReadXml(path);
             return true;
-
         }
     }
 }

@@ -29,7 +29,7 @@ namespace SteamScreenshotImporter
             gameBox.DataSource = dataSet.Tables["UserGame"];
 
             userBox.SelectedValueChanged += (s, e)
-                => dataSet.Tables["UserGame"].DefaultView.RowFilter = "id=" + userBox.SelectedValue;
+                => dataSet.Tables["UserGame"].DefaultView.RowFilter = userBox.SelectedIndex>=0? "id=" + userBox.SelectedValue : "";
 
             Output = msg => outputBox.AppendText(Environment.NewLine + msg);
             SteamData.Data = dataSet;
@@ -56,14 +56,14 @@ namespace SteamScreenshotImporter
                 try
                 {
                     using (var key = Registry.CurrentUser.OpenSubKey("Software\\Valve\\Steam"))
-                        return key.GetValue("SteamPath").ToString();
+                        return Path.GetFullPath(key.GetValue("SteamPath") + "\\");
                 }
                 catch { MessageBox.Show("察觉不到Steam的存在! 请手动选择目录!"); }
             }
             else
             {
                 if (Directory.Exists(Path.Combine(path, "userdata")))
-                    return path;
+                    return Path.GetFullPath(path + "\\");
                 else
                     MessageBox.Show("没有找到userdata子目录, 请重新选择目录");
             }
@@ -74,6 +74,7 @@ namespace SteamScreenshotImporter
 
         private void btnScan_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            dataSet.Clear();
             Steam.RootPath = FindSteamPath();
             Steam.Scan();
             SteamData.Save(AppDataPath + "data.xml");
@@ -109,6 +110,21 @@ namespace SteamScreenshotImporter
         {
             if (addFolderDialog.ShowDialog() == DialogResult.OK)
                 AddImages(new[] { addFolderDialog.SelectedPath });
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            if(userBox.SelectedIndex == -1 || gameBox.SelectedIndex == -1)
+            {
+                Output("请选择用户和游戏!");
+                return;
+            }
+
+            int userId = (int)userBox.SelectedValue, appId = (int)gameBox.SelectedValue;
+            var screenshotDir = string.Format(@"{0}userdata\{1}\760\remote\{2}\screenshots\", Steam.RootPath, userId, appId);
+
+            Steam.ImportImages(ImageList, screenshotDir);
+            
         }
     }
 }
