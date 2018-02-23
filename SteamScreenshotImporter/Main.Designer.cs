@@ -56,6 +56,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.outputBox = new System.Windows.Forms.TextBox();
+            this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
+            this.addFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
@@ -274,6 +276,7 @@
             this.btnAddFolder.TabIndex = 3;
             this.btnAddFolder.TabStop = true;
             this.btnAddFolder.Text = "添加目录...";
+            this.btnAddFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnAddFolder_LinkClicked);
             // 
             // label4
             // 
@@ -295,6 +298,7 @@
             this.btnAddImage.TabIndex = 1;
             this.btnAddImage.TabStop = true;
             this.btnAddImage.Text = "添加图像...";
+            this.btnAddImage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnAddImage_LinkClicked);
             // 
             // label3
             // 
@@ -338,8 +342,21 @@
             this.outputBox.Size = new System.Drawing.Size(341, 56);
             this.outputBox.TabIndex = 5;
             // 
+            // addImageDialog
+            // 
+            this.addImageDialog.DefaultExt = "图像文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
+            this.addImageDialog.Filter = "图片文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
+            this.addImageDialog.Multiselect = true;
+            this.addImageDialog.Title = "添加图像";
+            // 
+            // addFolderDialog
+            // 
+            this.addFolderDialog.Description = "选择目录";
+            this.addFolderDialog.ShowNewFolderButton = false;
+            // 
             // Main
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -351,6 +368,8 @@
             this.Text = "Steam Screenshot Importer";
             this.Load += new System.EventHandler(this.Main_Load);
             this.Shown += new System.EventHandler(this.Main_Shown);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Main_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Main_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).EndInit();
@@ -396,6 +415,8 @@
         private System.Data.DataColumn dataColumn5;
         private System.Data.DataColumn dataColumn6;
         private System.Data.DataColumn dataColumn7;
+        private System.Windows.Forms.OpenFileDialog addImageDialog;
+        private System.Windows.Forms.FolderBrowserDialog addFolderDialog;
     }
 }
 

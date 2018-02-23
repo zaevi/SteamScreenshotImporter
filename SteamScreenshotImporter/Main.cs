@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -18,14 +19,17 @@ namespace SteamScreenshotImporter
 
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SteamScreenImporter\";
 
+        public static BindingList<string> ImageList = new BindingList<string>();
+
         public Main()
         {
             InitializeComponent();
+            listBox.DataSource = ImageList;
             dataSet.Tables["UserGame"].Columns["name"].Expression = "Parent(appid).name";
             gameBox.DataSource = dataSet.Tables["UserGame"];
 
-            userBox.SelectedValueChanged += (s, e) 
-                => dataSet.Tables["UserGame"].DefaultView.RowFilter = "id="+ userBox.SelectedValue;
+            userBox.SelectedValueChanged += (s, e)
+                => dataSet.Tables["UserGame"].DefaultView.RowFilter = "id=" + userBox.SelectedValue;
 
             Output = msg => outputBox.AppendText(Environment.NewLine + msg);
             SteamData.Data = dataSet;
@@ -45,7 +49,7 @@ namespace SteamScreenshotImporter
 
         }
 
-        string FindSteamPath(string path=null)
+        string FindSteamPath(string path = null)
         {
             if (path == null)
             {
@@ -63,7 +67,7 @@ namespace SteamScreenshotImporter
                 else
                     MessageBox.Show("没有找到userdata子目录, 请重新选择目录");
             }
-            if(steamPathDialog.ShowDialog() == DialogResult.OK)
+            if (steamPathDialog.ShowDialog() == DialogResult.OK)
                 return FindSteamPath(steamPathDialog.SelectedPath);
             return null;
         }
@@ -73,6 +77,38 @@ namespace SteamScreenshotImporter
             Steam.RootPath = FindSteamPath();
             Steam.Scan();
             SteamData.Save(AppDataPath + "data.xml");
+        }
+
+        string[] ImageExt = { ".bmp", ".jpeg", ".png", "jpg" };
+
+        private bool IsImage(string file)
+            => ImageExt.Any(e => file.EndsWith(e, StringComparison.OrdinalIgnoreCase)) && File.Exists(file);
+
+        private void AddImages(string[] files)
+        {
+            foreach (var file in files)
+            {
+                if (IsImage(file)) ImageList.Add(file);
+                else if (Directory.Exists(file)) AddImages(Directory.GetFiles(file));
+            }
+        }
+
+        private void Main_DragDrop(object sender, DragEventArgs e)
+            => AddImages(e.Data.GetData(DataFormats.FileDrop) as string[]);
+
+        private void Main_DragEnter(object sender, DragEventArgs e)
+            => e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
+
+        private void btnAddImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (addImageDialog.ShowDialog() == DialogResult.OK)
+                AddImages(addImageDialog.FileNames);
+        }
+
+        private void btnAddFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (addFolderDialog.ShowDialog() == DialogResult.OK)
+                AddImages(new[] { addFolderDialog.SelectedPath });
         }
     }
 }
