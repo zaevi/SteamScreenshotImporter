@@ -115,7 +115,12 @@ namespace SteamScreenshotImporter
         {
             if(userBox.SelectedIndex == -1 || gameBox.SelectedIndex == -1)
             {
-                Output("请选择用户和游戏!");
+                Output("请正确选择用户和游戏!");
+                return;
+            }
+            if(ImageList.Count == 0)
+            {
+                Output("并没有什么可以导入");
                 return;
             }
 

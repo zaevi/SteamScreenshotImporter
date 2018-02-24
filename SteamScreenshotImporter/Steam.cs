@@ -14,9 +14,6 @@ namespace SteamScreenshotImporter
     {
         public static string RootPath { get; set; } = null;
 
-        // <k,v>
-        public static Dictionary<string, string> Settings = null;
-
         public static DataTable Users { get => SteamData.Data.Tables["Users"]; }
         public static DataTable Games { get => SteamData.Data.Tables["Games"]; }
         public static DataTable UserGame { get => SteamData.Data.Tables["UserGame"]; }
@@ -93,10 +90,7 @@ namespace SteamScreenshotImporter
 
     class SteamData
     {
-
         public static DataSet Data;
-
-        private const int Version = 1;
 
         public static bool Save(string path)
         {
