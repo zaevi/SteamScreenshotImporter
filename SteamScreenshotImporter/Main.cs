@@ -21,6 +21,7 @@ namespace SteamScreenshotImporter
         public Main()
         {
             InitializeComponent();
+            Icon = Properties.Resources.icon;
             listBox.DataSource = ImageList;
             dataSet.Tables["UserGame"].Columns["name"].Expression = "Parent(appid).name";
             gameBox.DataSource = dataSet.Tables["UserGame"];
@@ -151,5 +152,11 @@ namespace SteamScreenshotImporter
                 new XElement("LastFolderDialogPath", addFolderDialog.SelectedPath))
                 .Save(xmlPath);
         }
+
+        private void linkSteam_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+            => System.Diagnostics.Process.Start("http://steamcommunity.com/id/zaeworks/");
+
+        private void linkGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+            => System.Diagnostics.Process.Start("https://github.com/Zaeworks/SteamScreenshotImporter");
     }
 }

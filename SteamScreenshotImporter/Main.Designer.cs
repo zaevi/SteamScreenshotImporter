@@ -59,6 +59,9 @@
             this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.addFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.btnClear = new System.Windows.Forms.LinkLabel();
+            this.linkGithub = new System.Windows.Forms.LinkLabel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.linkSteam = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
@@ -316,7 +319,7 @@
             // 
             this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImport.Location = new System.Drawing.Point(367, 18);
+            this.btnImport.Location = new System.Drawing.Point(369, 23);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(104, 44);
             this.btnImport.TabIndex = 4;
@@ -326,23 +329,27 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.linkGithub);
+            this.panel4.Controls.Add(this.label5);
+            this.panel4.Controls.Add(this.linkSteam);
             this.panel4.Controls.Add(this.outputBox);
             this.panel4.Controls.Add(this.btnImport);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 267);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.panel4.Size = new System.Drawing.Size(483, 75);
+            this.panel4.Size = new System.Drawing.Size(483, 91);
             this.panel4.TabIndex = 4;
             // 
             // outputBox
             // 
-            this.outputBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.outputBox.Location = new System.Drawing.Point(10, 0);
             this.outputBox.Multiline = true;
             this.outputBox.Name = "outputBox";
             this.outputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputBox.Size = new System.Drawing.Size(341, 65);
+            this.outputBox.Size = new System.Drawing.Size(350, 67);
             this.outputBox.TabIndex = 5;
             // 
             // addImageDialog
@@ -369,13 +376,49 @@
             this.btnClear.Text = "清空列表";
             this.btnClear.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnClear_LinkClicked);
             // 
+            // linkGithub
+            // 
+            this.linkGithub.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linkGithub.AutoSize = true;
+            this.linkGithub.LinkColor = System.Drawing.Color.Gray;
+            this.linkGithub.Location = new System.Drawing.Point(104, 70);
+            this.linkGithub.Name = "linkGithub";
+            this.linkGithub.Size = new System.Drawing.Size(55, 15);
+            this.linkGithub.TabIndex = 8;
+            this.linkGithub.TabStop = true;
+            this.linkGithub.Text = "Github";
+            this.linkGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkGithub_LinkClicked);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(89, 70);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(15, 15);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "/";
+            // 
+            // linkSteam
+            // 
+            this.linkSteam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linkSteam.AutoSize = true;
+            this.linkSteam.LinkColor = System.Drawing.Color.Gray;
+            this.linkSteam.Location = new System.Drawing.Point(7, 70);
+            this.linkSteam.Name = "linkSteam";
+            this.linkSteam.Size = new System.Drawing.Size(82, 15);
+            this.linkSteam.TabIndex = 6;
+            this.linkSteam.TabStop = true;
+            this.linkSteam.Text = "作者资料页";
+            this.linkSteam.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSteam_LinkClicked);
+            // 
             // Main
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(483, 342);
+            this.ClientSize = new System.Drawing.Size(483, 358);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -435,6 +478,9 @@
         private System.Windows.Forms.OpenFileDialog addImageDialog;
         private System.Windows.Forms.FolderBrowserDialog addFolderDialog;
         private System.Windows.Forms.LinkLabel btnClear;
+        private System.Windows.Forms.LinkLabel linkGithub;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.LinkLabel linkSteam;
     }
 }
 
