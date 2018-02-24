@@ -58,6 +58,7 @@
             this.outputBox = new System.Windows.Forms.TextBox();
             this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.addFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnClear = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
@@ -255,6 +256,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.btnClear);
             this.panel3.Controls.Add(this.btnAddFolder);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.btnAddImage);
@@ -270,19 +272,19 @@
             // 
             this.btnAddFolder.AutoSize = true;
             this.btnAddFolder.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnAddFolder.Location = new System.Drawing.Point(235, 2);
+            this.btnAddFolder.Location = new System.Drawing.Point(211, 2);
             this.btnAddFolder.Name = "btnAddFolder";
-            this.btnAddFolder.Size = new System.Drawing.Size(91, 15);
+            this.btnAddFolder.Size = new System.Drawing.Size(67, 15);
             this.btnAddFolder.TabIndex = 3;
             this.btnAddFolder.TabStop = true;
-            this.btnAddFolder.Text = "添加目录...";
+            this.btnAddFolder.Text = "添加目录";
             this.btnAddFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnAddFolder_LinkClicked);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label4.Location = new System.Drawing.Point(220, 2);
+            this.label4.Location = new System.Drawing.Point(196, 2);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(15, 15);
             this.label4.TabIndex = 2;
@@ -294,10 +296,10 @@
             this.btnAddImage.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnAddImage.Location = new System.Drawing.Point(129, 2);
             this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(91, 15);
+            this.btnAddImage.Size = new System.Drawing.Size(67, 15);
             this.btnAddImage.TabIndex = 1;
             this.btnAddImage.TabStop = true;
-            this.btnAddImage.Text = "添加图像...";
+            this.btnAddImage.Text = "添加图像";
             this.btnAddImage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnAddImage_LinkClicked);
             // 
             // label3
@@ -354,6 +356,18 @@
             // 
             this.addFolderDialog.Description = "选择目录";
             this.addFolderDialog.ShowNewFolderButton = false;
+            // 
+            // btnClear
+            // 
+            this.btnClear.AutoSize = true;
+            this.btnClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnClear.Location = new System.Drawing.Point(394, 2);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(67, 15);
+            this.btnClear.TabIndex = 4;
+            this.btnClear.TabStop = true;
+            this.btnClear.Text = "清空列表";
+            this.btnClear.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnClear_LinkClicked);
             // 
             // Main
             // 
@@ -420,6 +434,7 @@
         private System.Data.DataColumn dataColumn7;
         private System.Windows.Forms.OpenFileDialog addImageDialog;
         private System.Windows.Forms.FolderBrowserDialog addFolderDialog;
+        private System.Windows.Forms.LinkLabel btnClear;
     }
 }
 

@@ -107,6 +107,9 @@ namespace SteamScreenshotImporter
                 AddImages(new[] { addFolderDialog.SelectedPath });
         }
 
+        private void btnClear_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+            => ImageList.Clear();
+
         private void btnImport_Click(object sender, EventArgs e)
         {
             if(userBox.SelectedIndex == -1 || gameBox.SelectedIndex == -1)
