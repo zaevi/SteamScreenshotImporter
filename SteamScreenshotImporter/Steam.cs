@@ -110,8 +110,8 @@ namespace SteamScreenshotImporter
 
         private static Image GetThumbnail(Image origin)
         {
-            var width = origin.Width * 200 / origin.Height;
-            Image img = new Bitmap(origin, new Size(width, 200));
+            var height = origin.Height * 200 / origin.Width;
+            Image img = new Bitmap(origin, new Size(200, height));
             return img;
         }
     }
