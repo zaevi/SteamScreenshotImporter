@@ -25,3 +25,12 @@
 ## 依赖
 
 - 用于解析Valve Data Format文件`.vdf`的[Gameloop.Vdf](https://github.com/shravan2x/Gameloop.Vdf)
+
+## 更新
+
+### v1.1
+
+- 修复截图无法上传的问题
+`Steam在screenshots.vdf中自动添入的截图信息导致非Steam无法上传, 故改由本程序在导入截图时添入截图记录`
+
+- 修改缩略图尺寸为固定宽200
