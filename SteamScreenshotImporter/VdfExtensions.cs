@@ -29,5 +29,29 @@ namespace SteamScreenshotImporter
 
             return token;
         }
+
+        public static VToken Create(this VToken vdf, params string[] keys)
+        {
+            VToken token = vdf;
+            foreach (var key in keys)
+            {
+                if ((token as VObject).TryGetValue(key, out var value))
+                    token = value.Value;
+                else
+                {
+                    var val = new VObject();
+                    (token as VObject).Add(key, val);
+                    token = val;
+                }
+            }
+            return token;
+        }
+
+        public static VProperty AddProperty(this VToken vdf, string key, object value = null)
+        {
+            var property = new VProperty(key, new VValue(value ?? ""));
+            (vdf as VObject).Add(property);
+            return property;
+        }
     }
 }

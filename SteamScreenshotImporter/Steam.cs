@@ -57,25 +57,53 @@ namespace SteamScreenshotImporter
             return true;
         }
 
-        public static bool ImportImages(IEnumerable<string> imageList, string screenshotDir)
+        public static bool ImportImages(IEnumerable<string> imageList, int userId, int appId)
         {
+            var screenshotDir = string.Format(@"{0}userdata\{1}\760\remote\{2}\screenshots\", RootPath, userId, appId);
             Directory.CreateDirectory(screenshotDir);
 
             var time = DateTime.Now.ToString("yyyyMMddHHmmss_");
             int n = 1;
 
-            foreach(var imagePath in imageList)
+            var vdfPath = RootPath + @"\userdata\" + userId + @"\760\screenshots.vdf";
+            File.Copy(vdfPath, vdfPath + ".bak", true);
+
+            var vdf = VdfConvert.Deserialize(File.ReadAllText(vdfPath));
+            var appVdf = vdf.Value.Create(appId.ToString()) as VObject;
+            var appVdfIndex = appVdf.Count;
+
+            foreach (var imagePath in imageList)
             {
                 var name = time + (n++) + ".jpg";
+                Size size;
                 using (var image = Image.FromFile(imagePath))
                 {
                     image.Save(screenshotDir + name, ImageFormat.Jpeg);
                     using (var thumbnail = GetThumbnail(image))
                         thumbnail.Save(screenshotDir + @"thumbnails\" + name, ImageFormat.Jpeg);
+                    size = image.Size;
                 }
+
+                var token = new VObject();
+                token.AddProperty("type", 1);
+                token.AddProperty("filename", appId + "/screenshots/" + name);
+                token.AddProperty("thumbnail", appId + "/screenshots/thumbnails/" + name);
+                token.AddProperty("vrfilename");
+                token.AddProperty("imported", 1);
+                token.AddProperty("width", size.Width);
+                token.AddProperty("height", size.Height);
+                token.AddProperty("gameid", appId);
+                token.AddProperty("creation", (int)(File.GetLastWriteTime(imagePath) - new DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds);
+                token.AddProperty("caption");
+                token.AddProperty("Permissions", 2);
+                token.AddProperty("hscreenshot");
+                appVdf.Add((appVdfIndex++).ToString(), token);
 
                 Main.Output(Path.GetFileName(imagePath) + " => " + name);
             }
+
+            Main.Output("写入截图记录...");
+            File.WriteAllText(vdfPath, VdfConvert.Serialize(vdf));
 
             return true;
         }

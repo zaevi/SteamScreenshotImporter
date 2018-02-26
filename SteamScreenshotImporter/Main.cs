@@ -125,9 +125,7 @@ namespace SteamScreenshotImporter
             }
 
             int userId = (int)userBox.SelectedValue, appId = (int)gameBox.SelectedValue;
-            var screenshotDir = string.Format(@"{0}userdata\{1}\760\remote\{2}\screenshots\", Steam.RootPath, userId, appId);
-
-            Steam.ImportImages(ImageList, screenshotDir);
+            Steam.ImportImages(ImageList, userId, appId);
 
             Output("导入成功");
             ImageList.Clear();
