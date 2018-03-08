@@ -33,7 +33,6 @@
             this.userBox = new System.Windows.Forms.ComboBox();
             this.dataSet = new System.Data.DataSet();
             this.dataTable1 = new System.Data.DataTable();
-            this.dataColumn1 = new System.Data.DataColumn();
             this.dataColumn2 = new System.Data.DataColumn();
             this.dataTable2 = new System.Data.DataTable();
             this.dataColumn3 = new System.Data.DataColumn();
@@ -42,26 +41,28 @@
             this.dataColumn5 = new System.Data.DataColumn();
             this.dataColumn6 = new System.Data.DataColumn();
             this.dataColumn7 = new System.Data.DataColumn();
+            this.dataColumn8 = new System.Data.DataColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkShowAll = new System.Windows.Forms.CheckBox();
             this.btnScan = new System.Windows.Forms.LinkLabel();
             this.gameBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.listBox = new System.Windows.Forms.ListBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnClear = new System.Windows.Forms.LinkLabel();
             this.btnAddFolder = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.btnAddImage = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.btnImport = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.outputBox = new System.Windows.Forms.TextBox();
-            this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
-            this.addFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnClear = new System.Windows.Forms.LinkLabel();
             this.linkGithub = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
             this.linkSteam = new System.Windows.Forms.LinkLabel();
+            this.outputBox = new System.Windows.Forms.TextBox();
+            this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
+            this.addFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
@@ -89,14 +90,14 @@
             // 
             // userBox
             // 
-            this.userBox.DataSource = this.dataSet;
-            this.userBox.DisplayMember = "Users.name";
+            this.userBox.DisplayMember = "name";
             this.userBox.FormattingEnabled = true;
             this.userBox.Location = new System.Drawing.Point(91, 21);
             this.userBox.Name = "userBox";
             this.userBox.Size = new System.Drawing.Size(187, 23);
             this.userBox.TabIndex = 1;
-            this.userBox.ValueMember = "Users.id";
+            this.userBox.ValueMember = "id";
+            this.userBox.SelectedValueChanged += new System.EventHandler(this.SelectionChanged);
             // 
             // dataSet
             // 
@@ -104,10 +105,7 @@
             this.dataSet.Relations.AddRange(new System.Data.DataRelation[] {
             new System.Data.DataRelation("id", "Users", "UserGame", new string[] {
                         "id"}, new string[] {
-                        "id"}, false),
-            new System.Data.DataRelation("appid", "Games", "UserGame", new string[] {
-                        "appid"}, new string[] {
-                        "appid"}, false)});
+                        "id"}, false)});
             this.dataSet.Tables.AddRange(new System.Data.DataTable[] {
             this.dataTable1,
             this.dataTable2,
@@ -116,18 +114,8 @@
             // dataTable1
             // 
             this.dataTable1.Columns.AddRange(new System.Data.DataColumn[] {
-            this.dataColumn1,
             this.dataColumn2});
-            this.dataTable1.Constraints.AddRange(new System.Data.Constraint[] {
-            new System.Data.UniqueConstraint("Constraint1", new string[] {
-                        "appid"}, false)});
-            this.dataTable1.TableName = "Games";
-            // 
-            // dataColumn1
-            // 
-            this.dataColumn1.AllowDBNull = false;
-            this.dataColumn1.ColumnName = "appid";
-            this.dataColumn1.DataType = typeof(int);
+            this.dataTable1.TableName = "Path";
             // 
             // dataColumn2
             // 
@@ -160,14 +148,12 @@
             this.dataTable3.Columns.AddRange(new System.Data.DataColumn[] {
             this.dataColumn5,
             this.dataColumn6,
-            this.dataColumn7});
+            this.dataColumn7,
+            this.dataColumn8});
             this.dataTable3.Constraints.AddRange(new System.Data.Constraint[] {
             new System.Data.UniqueConstraint("Constraint1", new string[] {
                         "appid",
                         "id"}, true),
-            new System.Data.ForeignKeyConstraint("appid", "Games", new string[] {
-                        "appid"}, new string[] {
-                        "appid"}, System.Data.AcceptRejectRule.None, System.Data.Rule.Cascade, System.Data.Rule.Cascade),
             new System.Data.ForeignKeyConstraint("id", "Users", new string[] {
                         "id"}, new string[] {
                         "id"}, System.Data.AcceptRejectRule.None, System.Data.Rule.Cascade, System.Data.Rule.Cascade)});
@@ -191,10 +177,15 @@
             // dataColumn7
             // 
             this.dataColumn7.ColumnName = "name";
-            this.dataColumn7.ReadOnly = true;
+            // 
+            // dataColumn8
+            // 
+            this.dataColumn8.ColumnName = "local";
+            this.dataColumn8.DataType = typeof(bool);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkShowAll);
             this.panel1.Controls.Add(this.btnScan);
             this.panel1.Controls.Add(this.gameBox);
             this.panel1.Controls.Add(this.userBox);
@@ -203,13 +194,24 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(483, 93);
+            this.panel1.Size = new System.Drawing.Size(540, 93);
             this.panel1.TabIndex = 2;
+            // 
+            // checkShowAll
+            // 
+            this.checkShowAll.AutoSize = true;
+            this.checkShowAll.Location = new System.Drawing.Point(414, 23);
+            this.checkShowAll.Name = "checkShowAll";
+            this.checkShowAll.Size = new System.Drawing.Size(119, 19);
+            this.checkShowAll.TabIndex = 3;
+            this.checkShowAll.Text = "显示所有游戏";
+            this.checkShowAll.UseVisualStyleBackColor = true;
+            this.checkShowAll.CheckedChanged += new System.EventHandler(this.SelectionChanged);
             // 
             // btnScan
             // 
             this.btnScan.AutoSize = true;
-            this.btnScan.Location = new System.Drawing.Point(318, 24);
+            this.btnScan.Location = new System.Drawing.Point(293, 24);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(107, 15);
             this.btnScan.TabIndex = 2;
@@ -223,7 +225,7 @@
             this.gameBox.FormattingEnabled = true;
             this.gameBox.Location = new System.Drawing.Point(91, 58);
             this.gameBox.Name = "gameBox";
-            this.gameBox.Size = new System.Drawing.Size(375, 23);
+            this.gameBox.Size = new System.Drawing.Size(442, 23);
             this.gameBox.TabIndex = 1;
             this.gameBox.ValueMember = "appid";
             // 
@@ -244,7 +246,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 93);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(10);
-            this.panel2.Size = new System.Drawing.Size(483, 174);
+            this.panel2.Size = new System.Drawing.Size(540, 174);
             this.panel2.TabIndex = 3;
             // 
             // listBox
@@ -254,7 +256,7 @@
             this.listBox.ItemHeight = 15;
             this.listBox.Location = new System.Drawing.Point(10, 29);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(463, 135);
+            this.listBox.Size = new System.Drawing.Size(520, 135);
             this.listBox.TabIndex = 1;
             // 
             // panel3
@@ -268,8 +270,20 @@
             this.panel3.Location = new System.Drawing.Point(10, 10);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(2);
-            this.panel3.Size = new System.Drawing.Size(463, 19);
+            this.panel3.Size = new System.Drawing.Size(520, 19);
             this.panel3.TabIndex = 0;
+            // 
+            // btnClear
+            // 
+            this.btnClear.AutoSize = true;
+            this.btnClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnClear.Location = new System.Drawing.Point(451, 2);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(67, 15);
+            this.btnClear.TabIndex = 4;
+            this.btnClear.TabStop = true;
+            this.btnClear.Text = "清空列表";
+            this.btnClear.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnClear_LinkClicked);
             // 
             // btnAddFolder
             // 
@@ -319,7 +333,7 @@
             // 
             this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImport.Location = new System.Drawing.Point(369, 23);
+            this.btnImport.Location = new System.Drawing.Point(426, 23);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(104, 44);
             this.btnImport.TabIndex = 4;
@@ -338,43 +352,8 @@
             this.panel4.Location = new System.Drawing.Point(0, 267);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.panel4.Size = new System.Drawing.Size(483, 91);
+            this.panel4.Size = new System.Drawing.Size(540, 91);
             this.panel4.TabIndex = 4;
-            // 
-            // outputBox
-            // 
-            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.outputBox.Location = new System.Drawing.Point(10, 0);
-            this.outputBox.Multiline = true;
-            this.outputBox.Name = "outputBox";
-            this.outputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputBox.Size = new System.Drawing.Size(350, 67);
-            this.outputBox.TabIndex = 5;
-            // 
-            // addImageDialog
-            // 
-            this.addImageDialog.DefaultExt = "图像文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
-            this.addImageDialog.Filter = "图片文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
-            this.addImageDialog.Multiselect = true;
-            this.addImageDialog.Title = "添加图像";
-            // 
-            // addFolderDialog
-            // 
-            this.addFolderDialog.Description = "选择目录";
-            this.addFolderDialog.ShowNewFolderButton = false;
-            // 
-            // btnClear
-            // 
-            this.btnClear.AutoSize = true;
-            this.btnClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnClear.Location = new System.Drawing.Point(394, 2);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(67, 15);
-            this.btnClear.TabIndex = 4;
-            this.btnClear.TabStop = true;
-            this.btnClear.Text = "清空列表";
-            this.btnClear.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnClear_LinkClicked);
             // 
             // linkGithub
             // 
@@ -412,13 +391,36 @@
             this.linkSteam.Text = "作者资料页";
             this.linkSteam.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSteam_LinkClicked);
             // 
+            // outputBox
+            // 
+            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.outputBox.Location = new System.Drawing.Point(10, 0);
+            this.outputBox.Multiline = true;
+            this.outputBox.Name = "outputBox";
+            this.outputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.outputBox.Size = new System.Drawing.Size(405, 67);
+            this.outputBox.TabIndex = 5;
+            // 
+            // addImageDialog
+            // 
+            this.addImageDialog.DefaultExt = "图像文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
+            this.addImageDialog.Filter = "图片文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
+            this.addImageDialog.Multiselect = true;
+            this.addImageDialog.Title = "添加图像";
+            // 
+            // addFolderDialog
+            // 
+            this.addFolderDialog.Description = "选择目录";
+            this.addFolderDialog.ShowNewFolderButton = false;
+            // 
             // Main
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(483, 358);
+            this.ClientSize = new System.Drawing.Size(540, 358);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -466,7 +468,6 @@
         private System.Windows.Forms.TextBox outputBox;
         private System.Data.DataSet dataSet;
         private System.Data.DataTable dataTable1;
-        private System.Data.DataColumn dataColumn1;
         private System.Data.DataColumn dataColumn2;
         private System.Data.DataTable dataTable2;
         private System.Data.DataColumn dataColumn3;
@@ -481,6 +482,8 @@
         private System.Windows.Forms.LinkLabel linkGithub;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.LinkLabel linkSteam;
+        private System.Data.DataColumn dataColumn8;
+        private System.Windows.Forms.CheckBox checkShowAll;
     }
 }
 

@@ -22,12 +22,8 @@ namespace SteamScreenshotImporter
         {
             InitializeComponent();
             Icon = Properties.Resources.icon;
-            listBox.DataSource = ImageList;
-            dataSet.Tables["UserGame"].Columns["name"].Expression = "Parent(appid).name";
-            gameBox.DataSource = dataSet.Tables["UserGame"];
 
-            userBox.SelectedValueChanged += (s, e)
-                => dataSet.Tables["UserGame"].DefaultView.RowFilter = userBox.SelectedIndex>=0? "id=" + userBox.SelectedValue : "";
+            listBox.DataSource = ImageList;
 
             Output = msg => outputBox.AppendText(Environment.NewLine + msg);
             SteamData.Data = dataSet;
@@ -35,13 +31,20 @@ namespace SteamScreenshotImporter
             Directory.CreateDirectory(AppDataPath);
         }
 
+        private void SelectionChanged(object sender, EventArgs e)
+        {
+            var filter = "local=" + !checkShowAll.Checked +
+                (userBox.SelectedIndex >= 0 ? " and id=" + userBox.SelectedValue : "");
+            dataSet.Tables["UserGame"].DefaultView.RowFilter = filter;
+        }
 
         private void Main_Shown(object sender, EventArgs e)
         {
             if (!SteamData.Load(AppDataPath + "data.xml"))
                 btnScan_LinkClicked(null, null);
-            else
-                LoadSettings();
+            userBox.DataSource = dataSet.Tables["Users"];
+            gameBox.DataSource = dataSet.Tables["UserGame"];
+            LoadSettings();
         }
 
         string FindSteamPath(string path = null)
@@ -139,10 +142,10 @@ namespace SteamScreenshotImporter
 
             var xml = XElement.Load(xmlPath);
             userBox.SelectedValue = xml.Element("LastUser").Value;
+            checkShowAll.Checked = bool.Parse(xml.Element("ShowAllApp").Value);
             gameBox.SelectedValue = xml.Element("LastGame").Value;
             addImageDialog.InitialDirectory = xml.Element("LastFileDialogPath").Value;
             addFolderDialog.SelectedPath = xml.Element("LastFolderDialogPath").Value;
-
         }
 
         private void SaveSettings()
@@ -152,7 +155,8 @@ namespace SteamScreenshotImporter
                 new XElement("LastUser", userBox.SelectedValue),
                 new XElement("LastGame", gameBox.SelectedValue),
                 new XElement("LastFileDialogPath", addImageDialog.InitialDirectory),
-                new XElement("LastFolderDialogPath", addFolderDialog.SelectedPath))
+                new XElement("LastFolderDialogPath", addFolderDialog.SelectedPath),
+                new XElement("ShowAllApp", checkShowAll.Checked))
                 .Save(xmlPath);
         }
 
