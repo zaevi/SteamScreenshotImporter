@@ -12,11 +12,9 @@ namespace SteamScreenshotImporter
     {
         public static Action<string> Output;
 
-        public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SteamScreenImporter\";
+        public static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SteamScreenImporter\";
 
-        public static BindingList<string> ImageList = new BindingList<string>();
-
-        dynamic Settings = new { SteamPath = string.Empty};
+        private static readonly BindingList<string> ImageList = new BindingList<string>();
 
         public Main()
         {
@@ -54,16 +52,16 @@ namespace SteamScreenshotImporter
                 try
                 {
                     using (var key = Registry.CurrentUser.OpenSubKey("Software\\Valve\\Steam"))
-                        return Path.GetFullPath(key.GetValue("SteamPath") + "\\");
+                        return Path.GetFullPath(key?.GetValue("SteamPath") + "\\");
                 }
-                catch { MessageBox.Show("察觉不到Steam的存在! 请手动选择目录!"); }
+                catch { MessageBox.Show(@"察觉不到Steam的存在! 请手动选择目录!"); }
             }
             else
             {
                 if (Directory.Exists(Path.Combine(path, "userdata")))
                     return Path.GetFullPath(path + "\\");
                 else
-                    MessageBox.Show("没有找到userdata子目录, 请重新选择目录");
+                    MessageBox.Show(@"没有找到userdata子目录, 请重新选择目录");
             }
             if (steamPathDialog.ShowDialog() == DialogResult.OK)
                 return FindSteamPath(steamPathDialog.SelectedPath);
@@ -79,7 +77,7 @@ namespace SteamScreenshotImporter
             SteamData.Save(AppDataPath + "data.xml");
         }
 
-        string[] ImageExt = { ".bmp", ".jpeg", ".png", "jpg" };
+        private readonly string[] ImageExt = { ".bmp", ".jpeg", ".png", "jpg" };
 
         private bool IsImage(string file)
             => ImageExt.Any(e => file.EndsWith(e, StringComparison.OrdinalIgnoreCase)) && File.Exists(file);
@@ -141,11 +139,11 @@ namespace SteamScreenshotImporter
             if (!File.Exists(xmlPath)) return;
 
             var xml = XElement.Load(xmlPath);
-            userBox.SelectedValue = xml.Element("LastUser").Value;
-            checkShowAll.Checked = bool.Parse(xml.Element("ShowAllApp").Value);
-            gameBox.SelectedValue = xml.Element("LastGame").Value;
-            addImageDialog.InitialDirectory = xml.Element("LastFileDialogPath").Value;
-            addFolderDialog.SelectedPath = xml.Element("LastFolderDialogPath").Value;
+            userBox.SelectedValue = xml.Element("LastUser")?.Value;
+            checkShowAll.Checked = bool.Parse(xml.Element("ShowAllApp")?.Value);
+            gameBox.SelectedValue = xml.Element("LastGame")?.Value;
+            addImageDialog.InitialDirectory = xml.Element("LastFileDialogPath")?.Value;
+            addFolderDialog.SelectedPath = xml.Element("LastFolderDialogPath")?.Value;
         }
 
         private void SaveSettings()

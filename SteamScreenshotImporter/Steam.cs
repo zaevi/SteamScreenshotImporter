@@ -50,15 +50,14 @@ namespace SteamScreenshotImporter
                     UserGame.Rows.Add(userID, appid, appName, localGames.Contains(appid));
                 }
 
-                Main.Output(string.Format("[{0}] 游戏:{1} (本地:{2})", name, UserGame.Compute("count(id)", "id=" + userID), UserGame.Compute("count(id)", "id=" + userID + " and local=true")));
-
+                Main.Output($"[{name}] 游戏:{UserGame.Compute("count(id)", "id=" + userID)} (本地:{UserGame.Compute("count(id)", "id=" + userID + " and local=true")})");
             }
             return true;
         }
 
         public static bool ImportImages(IEnumerable<string> imageList, int userId, int appId)
         {
-            var screenshotDir = string.Format(@"{0}userdata\{1}\760\remote\{2}\screenshots\", RootPath, userId, appId);
+            var screenshotDir = $@"{RootPath}userdata\{userId}\760\remote\{appId}\screenshots\";
             Directory.CreateDirectory(screenshotDir + @"thumbnails\");
 
             var time = DateTime.Now.ToString("yyyyMMddHHmmss_");
@@ -135,7 +134,7 @@ namespace SteamScreenshotImporter
         }
     }
 
-    class SteamData
+    static class SteamData
     {
         public static DataSet Data;
 
