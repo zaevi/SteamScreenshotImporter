@@ -1,8 +1,10 @@
 ﻿using Microsoft.Win32;
+using SteamScreenshotImporter.Localization;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -27,6 +29,18 @@ namespace SteamScreenshotImporter
             SteamData.Data = dataSet;
 
             Directory.CreateDirectory(AppDataPath);
+
+            label1.Text = text.selectuser;
+            label2.Text = text.selectapp;
+            btnScan.Text = text.scan;
+            checkShowAll.Text = text.showall;
+            label3.Text = text.dragmsg;
+            btnAddImage.Text = text.addimage;
+            btnAddFolder.Text = text.addfolder;
+            btnClear.Text = text.clear;
+            btnImport.Text = text.import;
+            linkSteam.Text = text.profile;
+            linkGithub.Text = text.github;
         }
 
         private void SelectionChanged(object sender, EventArgs e)
@@ -54,14 +68,14 @@ namespace SteamScreenshotImporter
                     using (var key = Registry.CurrentUser.OpenSubKey("Software\\Valve\\Steam"))
                         return Path.GetFullPath(key?.GetValue("SteamPath") + "\\");
                 }
-                catch { MessageBox.Show(@"察觉不到Steam的存在! 请手动选择目录!"); }
+                catch { MessageBox.Show(text.nosteamdir); }
             }
             else
             {
                 if (Directory.Exists(Path.Combine(path, "userdata")))
                     return Path.GetFullPath(path + "\\");
                 else
-                    MessageBox.Show(@"没有找到userdata子目录, 请重新选择目录");
+                    MessageBox.Show(text.errsteamdir);
             }
             if (steamPathDialog.ShowDialog() == DialogResult.OK)
                 return FindSteamPath(steamPathDialog.SelectedPath);
@@ -116,19 +130,19 @@ namespace SteamScreenshotImporter
         {
             if(userBox.SelectedIndex == -1 || gameBox.SelectedIndex == -1)
             {
-                Output("请正确选择用户和游戏!");
+                Output(text.wrongselect);
                 return;
             }
             if(ImageList.Count == 0)
             {
-                Output("并没有什么可以导入");
+                Output(text.noimage);
                 return;
             }
 
             int userId = (int)userBox.SelectedValue, appId = (int)gameBox.SelectedValue;
             Steam.ImportImages(ImageList, userId, appId);
 
-            Output("导入成功");
+            Output(text.imported);
             ImageList.Clear();
             SaveSettings();
         }

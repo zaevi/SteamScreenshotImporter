@@ -53,6 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Localization\text.Designer.cs">
+      <DependentUpon>text.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +68,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steam.cs" />
     <Compile Include="VdfExtensions.cs" />
+    <EmbeddedResource Include="Localization\text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\text.zh.resx" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

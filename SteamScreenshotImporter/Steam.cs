@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Linq;
+using SteamScreenshotImporter.Localization;
 
 namespace SteamScreenshotImporter
 {
@@ -26,12 +27,12 @@ namespace SteamScreenshotImporter
 
             AppName = AppName ?? GetAppList();
 
-            Main.Output("获取本地游戏列表...");
+            Main.Output(text.getlocalmsg);
 
             var appsDir = Path.Combine(RootPath, "steamapps");
             var localGames = Directory.GetFiles(appsDir, "appmanifest_*.acf").Select(s => int.Parse(s.Split(new[] { '_', '.' })[1])).ToArray();
 
-            Main.Output("获取玩家信息...");
+            Main.Output(text.getusermsg);
 
             var userdataDir = Path.Combine(RootPath, "userdata");
             foreach (var user in Directory.GetDirectories(userdataDir)
@@ -50,8 +51,10 @@ namespace SteamScreenshotImporter
                     UserGame.Rows.Add(userID, appid, appName, localGames.Contains(appid));
                 }
 
-                Main.Output($"[{name}] 游戏:{UserGame.Compute("count(id)", "id=" + userID)} (本地:{UserGame.Compute("count(id)", "id=" + userID + " and local=true")})");
+                // Main.Output($"[{name}] 游戏:{UserGame.Compute("count(id)", "id=" + userID)} (本地:{UserGame.Compute("count(id)", "id=" + userID + " and local=true")})");
             }
+            Main.Output(string.Format(text.scantotal, Users.Rows.Count, UserGame.AsEnumerable().Select(r => r["appid"]).Distinct().Count()));
+
             return true;
         }
 
@@ -100,7 +103,7 @@ namespace SteamScreenshotImporter
                 Main.Output(Path.GetFileName(imagePath) + " => " + name);
             }
 
-            Main.Output("写入截图记录...");
+            Main.Output(text.savevdf);
             File.WriteAllText(vdfPath, VdfConvert.Serialize(vdf));
 
             return true;
@@ -118,7 +121,7 @@ namespace SteamScreenshotImporter
             var path = Main.AppDataPath + "appList.dat";
             if(!File.Exists(path))
             {
-                Main.Output("拉取Steam游戏列表...");
+                Main.Output(text.getapplist);
                 var appList = XDocument.Load("http://api.steampowered.com/ISteamApps/GetAppList/v2?format=xml")
                     .Root.Element("apps").Elements()
                     .ToDictionary(e => int.Parse(e.Element("appid").Value), e => e.Element("name").Value);
