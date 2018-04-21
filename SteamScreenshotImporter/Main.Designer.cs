@@ -59,9 +59,9 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.linkGithub = new System.Windows.Forms.LinkLabel();
             this.linkSteam = new System.Windows.Forms.LinkLabel();
-            this.outputBox = new System.Windows.Forms.TextBox();
             this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.addFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.outputBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
@@ -86,6 +86,7 @@
             this.label1.Size = new System.Drawing.Size(67, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "选择用户";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // userBox
             // 
@@ -236,6 +237,7 @@
             this.label2.Size = new System.Drawing.Size(67, 15);
             this.label2.TabIndex = 0;
             this.label2.Text = "选择游戏";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // panel2
             // 
@@ -332,7 +334,7 @@
             // 
             this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImport.Location = new System.Drawing.Point(476, 80);
+            this.btnImport.Location = new System.Drawing.Point(462, 6);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(104, 44);
             this.btnImport.TabIndex = 4;
@@ -350,7 +352,7 @@
             this.panel4.Location = new System.Drawing.Point(0, 267);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.panel4.Size = new System.Drawing.Size(590, 148);
+            this.panel4.Size = new System.Drawing.Size(590, 74);
             this.panel4.TabIndex = 4;
             // 
             // linkGithub
@@ -358,7 +360,7 @@
             this.linkGithub.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkGithub.AutoSize = true;
             this.linkGithub.LinkColor = System.Drawing.Color.Gray;
-            this.linkGithub.Location = new System.Drawing.Point(104, 127);
+            this.linkGithub.Location = new System.Drawing.Point(104, 53);
             this.linkGithub.Name = "linkGithub";
             this.linkGithub.Size = new System.Drawing.Size(55, 15);
             this.linkGithub.TabIndex = 8;
@@ -371,25 +373,13 @@
             this.linkSteam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkSteam.AutoSize = true;
             this.linkSteam.LinkColor = System.Drawing.Color.Gray;
-            this.linkSteam.Location = new System.Drawing.Point(7, 127);
+            this.linkSteam.Location = new System.Drawing.Point(7, 53);
             this.linkSteam.Name = "linkSteam";
             this.linkSteam.Size = new System.Drawing.Size(82, 15);
             this.linkSteam.TabIndex = 6;
             this.linkSteam.TabStop = true;
             this.linkSteam.Text = "作者资料页";
             this.linkSteam.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSteam_LinkClicked);
-            // 
-            // outputBox
-            // 
-            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.outputBox.Location = new System.Drawing.Point(10, 0);
-            this.outputBox.Multiline = true;
-            this.outputBox.Name = "outputBox";
-            this.outputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputBox.Size = new System.Drawing.Size(460, 124);
-            this.outputBox.TabIndex = 5;
             // 
             // addImageDialog
             // 
@@ -403,13 +393,28 @@
             this.addFolderDialog.Description = "选择目录";
             this.addFolderDialog.ShowNewFolderButton = false;
             // 
+            // outputBox
+            // 
+            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputBox.BackColor = System.Drawing.Color.White;
+            this.outputBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.outputBox.Enabled = false;
+            this.outputBox.Location = new System.Drawing.Point(10, 0);
+            this.outputBox.Multiline = true;
+            this.outputBox.Name = "outputBox";
+            this.outputBox.ReadOnly = true;
+            this.outputBox.Size = new System.Drawing.Size(435, 50);
+            this.outputBox.TabIndex = 5;
+            // 
             // Main
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(590, 415);
+            this.ClientSize = new System.Drawing.Size(590, 341);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -454,7 +459,6 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox outputBox;
         private System.Data.DataSet dataSet;
         private System.Data.DataTable dataTable1;
         private System.Data.DataColumn dataColumn2;
@@ -472,6 +476,7 @@
         private System.Windows.Forms.LinkLabel linkSteam;
         private System.Data.DataColumn dataColumn8;
         private System.Windows.Forms.CheckBox checkShowAll;
+        private System.Windows.Forms.TextBox outputBox;
     }
 }
 

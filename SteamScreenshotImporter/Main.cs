@@ -4,7 +4,6 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -18,6 +17,9 @@ namespace SteamScreenshotImporter
 
         private static readonly BindingList<string> ImageList = new BindingList<string>();
 
+        private readonly string SettingPath = AppDataPath + "settings.xml";
+        private XElement Settings;
+
         public Main()
         {
             InitializeComponent();
@@ -26,9 +28,18 @@ namespace SteamScreenshotImporter
             listBox.DataSource = ImageList;
 
             Output = msg => outputBox.AppendText(Environment.NewLine + msg);
+
             SteamData.Data = dataSet;
 
-            Directory.CreateDirectory(AppDataPath);
+            if (!File.Exists(SettingPath))
+            {
+                Directory.CreateDirectory(AppDataPath);
+                Settings = new XElement("Settings");
+            }
+            else
+            {
+                Settings = XElement.Load(SettingPath);
+            }
 
             label1.Text = text.selectuser;
             label2.Text = text.selectapp;
@@ -56,7 +67,12 @@ namespace SteamScreenshotImporter
                 btnScan_LinkClicked(null, null);
             userBox.DataSource = dataSet.Tables["Users"];
             gameBox.DataSource = dataSet.Tables["UserGame"];
-            LoadSettings();
+
+            userBox.SelectedText = Settings.Element("LastUser")?.Value;
+            checkShowAll.Checked = Convert.ToBoolean(Settings.Element("ShowAllApp")?.Value);
+            gameBox.SelectedText = Settings.Element("LastGame")?.Value;
+            addImageDialog.InitialDirectory = Settings.Element("LastFileDialogPath")?.Value;
+            addFolderDialog.SelectedPath = Settings.Element("LastFolderDialogPath")?.Value;
         }
 
         string FindSteamPath(string path = null)
@@ -85,7 +101,6 @@ namespace SteamScreenshotImporter
         private void btnScan_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             dataSet.Clear();
-            File.Delete(AppDataPath + "settings.xml");
             Steam.RootPath = FindSteamPath();
             Steam.Scan();
             SteamData.Save(AppDataPath + "data.xml");
@@ -144,32 +159,13 @@ namespace SteamScreenshotImporter
 
             Output(text.imported);
             ImageList.Clear();
-            SaveSettings();
-        }
 
-        private void LoadSettings()
-        {
-            var xmlPath = AppDataPath + "settings.xml";
-            if (!File.Exists(xmlPath)) return;
-
-            var xml = XElement.Load(xmlPath);
-            userBox.SelectedValue = xml.Element("LastUser")?.Value;
-            checkShowAll.Checked = bool.Parse(xml.Element("ShowAllApp")?.Value);
-            gameBox.SelectedValue = xml.Element("LastGame")?.Value;
-            addImageDialog.InitialDirectory = xml.Element("LastFileDialogPath")?.Value;
-            addFolderDialog.SelectedPath = xml.Element("LastFolderDialogPath")?.Value;
-        }
-
-        private void SaveSettings()
-        {
-            var xmlPath = AppDataPath + "settings.xml";
-            new XElement("Settings",
-                new XElement("LastUser", userBox.SelectedValue),
-                new XElement("LastGame", gameBox.SelectedValue),
-                new XElement("LastFileDialogPath", addImageDialog.InitialDirectory),
-                new XElement("LastFolderDialogPath", addFolderDialog.SelectedPath),
-                new XElement("ShowAllApp", checkShowAll.Checked))
-                .Save(xmlPath);
+            Settings.SetElementValue("LastUser", userBox.SelectedText);
+            Settings.SetElementValue("LastGame", gameBox.SelectedText);
+            Settings.SetElementValue("LastFileDialogPath", addImageDialog.InitialDirectory);
+            Settings.SetElementValue("LastFolderDialogPath", addFolderDialog.SelectedPath);
+            Settings.SetElementValue("ShowAllApp", checkShowAll.Checked);
+            Settings.Save(SettingPath);
         }
 
         private void linkSteam_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
