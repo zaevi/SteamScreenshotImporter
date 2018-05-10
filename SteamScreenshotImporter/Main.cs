@@ -41,6 +41,8 @@ namespace SteamScreenshotImporter
                 Settings = XElement.Load(SettingPath);
             }
 
+            // System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
+
             label1.Text = text.selectuser;
             label2.Text = text.selectapp;
             btnScan.Text = text.scan;

@@ -50,8 +50,6 @@ namespace SteamScreenshotImporter
                     if(!AppName.TryGetValue(appid, out string appName)) appName = "(" + appid +")";
                     UserGame.Rows.Add(userID, appid, appName, localGames.Contains(appid));
                 }
-
-                // Main.Output($"[{name}] 游戏:{UserGame.Compute("count(id)", "id=" + userID)} (本地:{UserGame.Compute("count(id)", "id=" + userID + " and local=true")})");
             }
             Main.Output(string.Format(text.scantotal, Users.Rows.Count, UserGame.AsEnumerable().Select(r => r["appid"]).Distinct().Count()));
 

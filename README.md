@@ -1,41 +1,41 @@
 # Steam Screenshot Importer
 
-导入非Steam截图至Steam中
+Import images to Steam screenshot library.
 
-![预览](https://user-images.githubusercontent.com/12966814/37142156-383e9aea-22f2-11e8-9785-58b8b7d355e3.png)
+![Preview](https://user-images.githubusercontent.com/12966814/39874764-5343c226-54a1-11e8-9560-8ae430c390d4.png)
 
-## 特性
+### Features
 
-- 自动检索Steam目录并获取用户和游戏信息
-- 支持导入至非本地游戏
-- 支持批量图像导入, 支持拖拽
+- Scan Steam data automatically
+- Support importing images to all your apps (including non-local apps)
+- Multi-importing support, dragging support
 
-## 使用
+### Usage
 
-- 下载[SteamScreenshotImporter](https://github.com/Zaeworks/SteamScreenshotImporter/releases)
-- 使用之前先确保Steam在此机器上至少截了一张图, 随便开个游戏按下F12就好
-- 打开程序, 自动扫描Steam信息, 如果注册表中没有Steam注册信息请手动选择Steam根目录
-- 选择要导入至的用户和游戏
-- 将要导入的图像拖拽至程序中
-- 导入! 然后重启Steam
+- Download [SteamScreenshotImporter](https://github.com/Zaeworks/SteamScreenshotImporter/releases)
+- Make sure your Steam has captured any screenshot once before (to generate `Steam/userdata/{userid}/760/screenshots.vdf`)
+- Open this application, it will scan Steam user data, and fetch app name list (may take times)
+- Select user and app, and drag your images into
+- Import! If Steam is running now, just restart it after importing
 
-## 依赖
+### Required Package
 
-- 用于解析Valve Data Format文件`.vdf`的[Gameloop.Vdf](https://github.com/shravan2x/Gameloop.Vdf)
+- [Gameloop.Vdf](https://github.com/shravan2x/Gameloop.Vdf) to parse Value Data Format file `.vdf` 
 
-## 更新
+### Log
 
-### v1.2
+####v1.3
 
-- **支持导入截图至非本地游戏中**
+- Multi-language support
 
-  `第一次扫描时需通过Steam Web API拉取全部游戏列表, 会有一些卡顿 `
+#### v1.2
 
-- 优化性能
+- Non-local app importing support
 
-### v1.1
 
-- 修复截图无法上传的问题
-`Steam在screenshots.vdf中自动添入的截图信息导致非Steam无法上传, 故改由本程序在导入截图时添入截图记录`
+#### v1.1
 
-- 修改缩略图尺寸为固定宽200
+- Fixed - can't upload imported images
+  `screenshots.vdf has to be updated after import`
+
+- Change thumbnail's width to 200px

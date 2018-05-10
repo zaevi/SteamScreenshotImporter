@@ -59,9 +59,9 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.linkGithub = new System.Windows.Forms.LinkLabel();
             this.linkSteam = new System.Windows.Forms.LinkLabel();
+            this.outputBox = new System.Windows.Forms.TextBox();
             this.addImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.addFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.outputBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
@@ -80,7 +80,6 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(18, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 15);
@@ -231,7 +230,6 @@
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 15);
@@ -381,18 +379,6 @@
             this.linkSteam.Text = "作者资料页";
             this.linkSteam.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSteam_LinkClicked);
             // 
-            // addImageDialog
-            // 
-            this.addImageDialog.DefaultExt = "图像文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
-            this.addImageDialog.Filter = "图片文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
-            this.addImageDialog.Multiselect = true;
-            this.addImageDialog.Title = "添加图像";
-            // 
-            // addFolderDialog
-            // 
-            this.addFolderDialog.Description = "选择目录";
-            this.addFolderDialog.ShowNewFolderButton = false;
-            // 
             // outputBox
             // 
             this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -407,6 +393,18 @@
             this.outputBox.ReadOnly = true;
             this.outputBox.Size = new System.Drawing.Size(435, 50);
             this.outputBox.TabIndex = 5;
+            // 
+            // addImageDialog
+            // 
+            this.addImageDialog.DefaultExt = "图像文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
+            this.addImageDialog.Filter = "图片文件|*.bmp;*.jpg;*.jpeg;*.gif;*.png";
+            this.addImageDialog.Multiselect = true;
+            this.addImageDialog.Title = "添加图像";
+            // 
+            // addFolderDialog
+            // 
+            this.addFolderDialog.Description = "选择目录";
+            this.addFolderDialog.ShowNewFolderButton = false;
             // 
             // Main
             // 
